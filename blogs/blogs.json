@@ -1,0 +1,14 @@
+{
+  "repo": "university-of-aberdeen",
+  "feeds": [
+    {
+      "source": "https://www.abdn.ac.uk/news/",
+      "feed_url": "https://www.abdn.ac.uk/news/latest-news/",
+      "title": "University of Aberdeen News",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-03T00:00:00Z"
+}

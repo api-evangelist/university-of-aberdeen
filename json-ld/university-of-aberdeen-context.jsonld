@@ -1,0 +1,62 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "abdn": "https://www.abdn.ac.uk/#vocab/",
+    "schema": "https://schema.org/",
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+    "foundingDate": "schema:foundingDate",
+    "location": "schema:location",
+    "sameAs": "schema:sameAs",
+    "CollegeOrUniversity": "schema:CollegeOrUniversity",
+    "EducationalOrganization": "schema:EducationalOrganization",
+    "api": {
+      "@id": "abdn:api",
+      "@container": "@set"
+    },
+    "apiName": "schema:name",
+    "humanURL": {
+      "@id": "schema:documentation",
+      "@type": "@id"
+    },
+    "baseURL": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "community": "abdn:community",
+    "collection": "abdn:collection",
+    "item": "abdn:item",
+    "bitstream": "abdn:bitstream",
+    "metadata": "abdn:metadata",
+    "record": "abdn:record",
+    "set": "abdn:set",
+    "identifier": "schema:identifier",
+    "handle": "abdn:handle",
+    "title": "schema:name",
+    "creator": "schema:creator",
+    "subject": "schema:about",
+    "datePublished": "schema:datePublished"
+  },
+  "@type": "CollegeOrUniversity",
+  "name": "University of Aberdeen",
+  "url": "https://www.abdn.ac.uk/",
+  "foundingDate": "1495",
+  "description": "A public research university in Aberdeen, Scotland, United Kingdom, whose public machine-readable footprint is centred on the Aberdeen University Research Archive (AURA), exposing a DSpace REST API and an OAI-PMH metadata-harvesting endpoint.",
+  "sameAs": [
+    "https://github.com/uofa",
+    "https://www.linkedin.com/school/university-of-aberdeen/"
+  ],
+  "api": [
+    {
+      "apiName": "AURA DSpace REST API",
+      "humanURL": "https://aura.abdn.ac.uk/",
+      "baseURL": "https://aura.abdn.ac.uk/server/api"
+    },
+    {
+      "apiName": "AURA OAI-PMH Metadata Harvesting",
+      "humanURL": "https://aura.abdn.ac.uk/",
+      "baseURL": "https://aura.abdn.ac.uk/server/oai/request"
+    }
+  ]
+}
