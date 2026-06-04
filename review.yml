@@ -1,0 +1,47 @@
+---
+name: University of Aberdeen
+description: University of Aberdeen public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/university-of-aberdeen/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      Verified two live public APIs on the Aberdeen University Research Archive
+      (AURA), which runs DSpace 8.1: a HATEOAS DSpace REST API at /server/api and an
+      OAI-PMH 2.0 endpoint at /server/oai/request (repository name "Aura", protocol
+      version 2.0). The Elsevier Pure research portal (abdn.elsevierpure.com) is live
+      but its OAI web service returned HTTP 500 and is not treated as public. No
+      general developer portal, course/timetable/SIS, or library Alma/Primo API was
+      found publicly documented; those appear internal/gated. The verified GitHub org
+      (github.com/uofa, domain abdn.ac.uk) hosts mostly forks, not API specs. No
+      endpoints were fabricated; all URLs below were probed live.
+    endpoints:
+      - url: https://www.abdn.ac.uk/
+        status: 200
+        note: Official university website.
+      - url: https://aura.abdn.ac.uk/
+        status: 200
+        note: AURA open-access institutional repository (DSpace 8).
+      - url: https://aura.abdn.ac.uk/server/api
+        status: 200
+        note: DSpace REST API root; reports DSpace 8.1-SNAPSHOT.
+      - url: https://aura.abdn.ac.uk/server/api/core/communities
+        status: 200
+        note: DSpace REST communities endpoint responds.
+      - url: https://aura.abdn.ac.uk/server/oai/request?verb=Identify
+        status: 200
+        note: OAI-PMH 2.0 Identify; repositoryName "Aura".
+      - url: https://abdn.elsevierpure.com/
+        status: 200
+        note: Elsevier Pure research portal; no public API documented.
+      - url: https://abdn.elsevierpure.com/ws/oai?verb=Identify
+        status: 500
+        note: Pure OAI web service errors; not public.
+      - url: https://github.com/uofa
+        status: 200
+        note: Verified University of Aberdeen GitHub org; mostly forks.
+      - url: https://www.linkedin.com/school/university-of-aberdeen/
+        status: 999
+        note: LinkedIn school page exists; 999 is bot-block, not absence.

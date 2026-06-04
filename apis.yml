@@ -1,0 +1,78 @@
+---
+aid: university-of-aberdeen
+name: University of Aberdeen
+description: >-
+  The University of Aberdeen is a public research university in Aberdeen, Scotland,
+  United Kingdom, founded in 1495 and ranked #236 in the QS World University Rankings
+  2025. Its public, machine-readable developer footprint is centred on the Aberdeen
+  University Research Archive (AURA), an open-access institutional repository running
+  DSpace 8 that exposes both a DSpace REST API and an OAI-PMH 2.0 metadata-harvesting
+  endpoint. The university also operates an Elsevier Pure research portal and maintains
+  a verified GitHub organization. No general-purpose public developer portal with
+  course, timetable, or student-information-system APIs was found; integration-style
+  APIs appear to be internal/gated.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/university-of-aberdeen/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Research
+  - Open Access
+  - Institutional Repository
+  - DSpace
+  - OAI-PMH
+  - United Kingdom
+  - Scotland
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: university-of-aberdeen:aura-dspace-rest
+    name: AURA DSpace REST API
+    description: >-
+      The Aberdeen University Research Archive (AURA) runs DSpace 8.1 and exposes a
+      public HATEOAS REST API for discovering communities, collections, items,
+      bitstreams, and related metadata in the open-access institutional repository.
+      The API root advertises endpoints for core resources, discovery/search,
+      statistics, and configuration.
+    humanURL: https://aura.abdn.ac.uk/
+    baseURL: https://aura.abdn.ac.uk/server/api
+    tags: [ Research, Open Access, Institutional Repository, DSpace, REST ]
+    properties:
+      - type: Documentation
+        url: https://aura.abdn.ac.uk/server/api
+  - aid: university-of-aberdeen:aura-oai-pmh
+    name: AURA OAI-PMH Metadata Harvesting
+    description: >-
+      AURA provides an OAI-PMH 2.0 endpoint (repository name "Aura") for harvesting
+      Dublin Core and other metadata formats describing the University of Aberdeen's
+      open-access research outputs. Standard verbs such as Identify, ListRecords,
+      ListSets, and GetRecord are supported.
+    humanURL: https://aura.abdn.ac.uk/
+    baseURL: https://aura.abdn.ac.uk/server/oai/request
+    tags: [ Research, Open Access, Institutional Repository, OAI-PMH, Metadata ]
+    properties:
+      - type: Documentation
+        url: https://aura.abdn.ac.uk/server/oai/request?verb=Identify
+common:
+  - type: Website
+    url: https://www.abdn.ac.uk/
+  - type: GitHub
+    url: https://github.com/uofa
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/university-of-aberdeen/
+  - type: Plans
+    url: plans/university-of-aberdeen-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/university-of-aberdeen-rate-limits.yml
+  - type: FinOps
+    url: finops/university-of-aberdeen-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
