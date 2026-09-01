@@ -2,39 +2,64 @@
 aid: university-of-aberdeen
 name: University of Aberdeen
 description: >-
-  The University of Aberdeen is a public research university in Aberdeen, Scotland,
-  United Kingdom, founded in 1495 and ranked #236 in the QS World University Rankings
-  2025. Its public, machine-readable developer footprint is centred on the Aberdeen
-  University Research Archive (AURA), an open-access institutional repository running
-  DSpace 8 that exposes both a DSpace REST API and an OAI-PMH 2.0 metadata-harvesting
-  endpoint. The university also operates an Elsevier Pure research portal and maintains
-  a verified GitHub organization. No general-purpose public developer portal with
-  course, timetable, or student-information-system APIs was found; integration-style
-  APIs appear to be internal/gated.
+  The University of Aberdeen is a public research university in Aberdeen, Scotland, founded in 1495
+  and one of the four ancient universities of Scotland. Its programmable footprint is small, real, and
+  almost entirely operated by somebody else. The University publishes NO institution-operated API
+  contract: there is no api.abdn.ac.uk, no developer.abdn.ac.uk, no data.abdn.ac.uk, no open data
+  portal, no public course, timetable or student-information-system API, no llms.txt and no sitemap.xml,
+  and its verified GitHub organization (github.com/uofa) holds seventeen repositories of which every
+  single one is a fork. What it does operate in machine-readable form is its identity estate: a
+  Shibboleth SAML 2.0 Identity Provider, entityID https://shibserv.abdn.ac.uk/shibboleth, scope
+  abdn.ac.uk, registered in the Jisc UK Access Management Federation and served as signed metadata
+  through the federation MDQ service and directly from shibserv2.abdn.ac.uk, plus a Microsoft Entra ID
+  tenant (8c2b19ad-5f9c-49d4-9077-3ec3cfc52b3f) with live OIDC discovery and WS-Federation metadata.
+  Everything else that looks like an Aberdeen API is a tenancy. AURA, the Aberdeen University Research
+  Archive, runs DSpace 8.1 and exposes a HATEOAS REST API and a thirteen-format OAI-PMH 2.0 endpoint —
+  but aura.abdn.ac.uk CNAMEs to aura.abdn-lb.is.ed.ac.uk and resolves into University of Edinburgh
+  Information Services address space, so the deployment is Edinburgh's and the software is DSpace's.
+  The research portal at abdn.elsevierpure.com is Elsevier Pure; it serves a second OAI-PMH repository
+  and a publicly readable 1.3MB openapi.yaml whose own info.title is "Pure API" and whose contact is
+  pure-support@elsevier.com — that contract is Elsevier's and is deliberately not held under this slug.
+  MyAberdeen is Blackboard Learn and library discovery is Ex Libris Primo. The University is a Crossref
+  member (12669, prefixes 10.57064 and 10.57132) and a DataCite member (HUGZ) operating the registered
+  institutional repository BL.ABDN. Recorded honestly: one institution-operated surface class, five
+  tenancies, three registry memberships, and zero API contracts of its own.
 type: Index
 deliveryModel:
   model: saas
   open_source: false
-  commercial: true
-  callable_host: false
+  commercial: false
+  callable_host: true
   label: Hosted service · you call their endpoint
-  confidence: medium
+  confidence: high
   source:
-  - pricing
-  generated: '2026-08-28'
-  method: derived
+    - probe
+  generated: '2026-09-01'
+  method: probed
+  note: >-
+    Callable hosts exist and were retrieved live on 2026-09-01, but every one of them is
+    tenant-operated: the DSpace REST and OAI-PMH endpoints on aura.abdn.ac.uk (Edinburgh IS
+    infrastructure) and the Pure OAI-PMH endpoint on abdn.elsevierpure.com. The institution's own
+    machine-readable surfaces are federation metadata documents, not callable APIs.
 accessModel:
   pricing: free
-  onboarding: unknown
+  onboarding: none
   trial: false
-  try_now: false
-  public: false
-  label: Free
-  confidence: medium
+  try_now: true
+  public: true
+  label: Free · No registration (public metadata surfaces)
+  confidence: high
   source:
-  - plans
-  generated: '2026-07-22'
-  method: derived
+    - probe
+  generated: '2026-09-01'
+  method: probed
+  note: >-
+    Every surface reachable without credentials on 2026-09-01 — DSpace REST, both OAI-PMH endpoints,
+    the SAML metadata, the Entra OIDC discovery document, the DataCite and Crossref member records —
+    was anonymous and free. There is no signup, no key and no plan anywhere on abdn.ac.uk. The one
+    keyed surface is Elsevier's Pure REST API (security: api-key), and that onboarding is Elsevier's,
+    not the institution's. The SAML IdP is free but is not self-serve: an application cannot obtain an
+    assertion without being registered as a service provider in the UK federation.
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/university-of-aberdeen.png
@@ -44,54 +69,380 @@ tags:
   - Higher Education
   - University
   - Research
-  - Open Access
-  - Institutional Repository
-  - DSpace
-  - OAI-PMH
   - United Kingdom
   - Scotland
+  - Identity Federation
+  - Shibboleth
+  - Research Data
+  - Open Access
+  - Institutional Repository
+  - OAI-PMH
+  - DSpace
+  - Library
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
 specificationVersion: '0.23'
 apis:
-  - aid: university-of-aberdeen:aura-dspace-rest
-    name: AURA DSpace REST API
+  - aid: university-of-aberdeen:shibboleth-saml-idp
+    name: Shibboleth SAML Identity Provider (UK Access Management Federation)
     description: >-
-      The Aberdeen University Research Archive (AURA) runs DSpace 8.1 and exposes a
-      public HATEOAS REST API for discovering communities, collections, items,
-      bitstreams, and related metadata in the open-access institutional repository.
-      The API root advertises endpoints for core resources, discovery/search,
-      statistics, and configuration.
-    humanURL: https://aura.abdn.ac.uk/
+      The University's own Shibboleth Identity Provider, entityID
+      https://shibserv.abdn.ac.uk/shibboleth, asserting shibmd:Scope abdn.ac.uk. Its entity descriptor
+      is published as signed, machine-readable SAML metadata through the Jisc UK Access Management
+      Federation MDQ service and onward into eduGAIN, and is also served directly by the institution
+      from shibserv2.abdn.ac.uk. Retrieved live on 2026-09-01 — 200, 14194 bytes of
+      application/samlmetadata+xml from the federation, 200 and 15707 bytes of application/xml from
+      Aberdeen's own host. Advertises SAML 2.0, SAML 1.1 and the native Shibboleth authn profile over
+      HTTP-Redirect, HTTP-POST and HTTP-POST-SimpleSign, plus an AttributeAuthorityDescriptor. This is
+      the only surface in this repository that is unambiguously the institution's own engineering, and
+      it is the class the June 2026 profile of this repo missed entirely. It is not a public developer
+      API: an application cannot obtain an assertion without being registered as a service provider in
+      the federation.
+    humanURL: https://www.abdn.ac.uk/it/
+    baseURL: http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Fshibserv.abdn.ac.uk%2Fshibboleth
+    tags: [ Identity, SSO, SAML, Shibboleth, Federation, eduGAIN ]
+    properties:
+      - type: IdentityFederation
+        url: http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Fshibserv.abdn.ac.uk%2Fshibboleth
+      - type: Documentation
+        url: https://shibserv2.abdn.ac.uk/idp/shibboleth
+      - type: Conformance
+        url: conformance/university-of-aberdeen-conformance.yml
+    x-operator: institution
+    x-operator-basis: >-
+      Signed EntityDescriptor from the UK Access Management Federation names OrganizationName
+      "University of Aberdeen", OrganizationDisplayName "University of Aberdeen" and shibmd:Scope
+      "abdn.ac.uk", with technical contact mailto:webmaster@abdn.ac.uk. The SSO endpoints it advertises
+      are all on shibserv2.abdn.ac.uk (5.101.151.154), which serves the same descriptor itself.
+    x-entity-id: https://shibserv.abdn.ac.uk/shibboleth
+    x-sso-endpoint: https://shibserv2.abdn.ac.uk/idp/profile/SAML2/Redirect/SSO
+    x-probe:
+      baseURL_status: 200
+      self_published_metadata_status: 200
+      sso_endpoint_bare_get_status: 400
+      note: >-
+        baseURL is the federation MDQ location because that is the machine-readable artifact an agent
+        can actually retrieve. MDQ is served over HTTP only; https://mdq.ukfederation.org.uk does not
+        answer. The SSO endpoint returns 400 to a bare GET because it requires a SAMLRequest — that is
+        protocol behaviour, not an outage, and it is recorded in x-sso-endpoint rather than as a
+        pointer. shibserv.abdn.ac.uk (the entityID host) does not resolve publicly; entityIDs are
+        names, not addresses.
+      probed: '2026-09-01'
+  - aid: university-of-aberdeen:entra-id-tenant
+    name: Microsoft Entra ID tenant (institutional identity)
+    description: >-
+      The University's Microsoft Entra ID tenant, 8c2b19ad-5f9c-49d4-9077-3ec3cfc52b3f, resolvable from
+      the abdn.ac.uk domain name. It publishes a live OpenID Connect discovery document (issuer
+      https://login.microsoftonline.com/8c2b19ad-5f9c-49d4-9077-3ec3cfc52b3f/v2.0, tenant_region_scope
+      EU) and a WS-Federation / SAML 2.0 federation metadata document with entityID
+      https://sts.windows.net/8c2b19ad-5f9c-49d4-9077-3ec3cfc52b3f/. The tenant, the domain binding and
+      the directory behind it are the institution's; the platform is Microsoft's. Recorded as a
+      federation surface rather than as a contract, exactly as the Shibboleth IdP is.
+    humanURL: https://www.abdn.ac.uk/it/
+    baseURL: https://login.microsoftonline.com/abdn.ac.uk/v2.0/.well-known/openid-configuration
+    tags: [ Identity, SSO, OpenID Connect, SAML, Entra ID, Federation ]
+    properties:
+      - type: IdentityFederation
+        url: https://login.microsoftonline.com/abdn.ac.uk/federationmetadata/2007-06/federationmetadata.xml
+      - type: Documentation
+        url: https://login.microsoftonline.com/abdn.ac.uk/v2.0/.well-known/openid-configuration
+    x-operator: federation
+    x-operator-basis: >-
+      OIDC discovery on the abdn.ac.uk domain resolves to tenant
+      8c2b19ad-5f9c-49d4-9077-3ec3cfc52b3f, which proves the domain is verified into a tenant the
+      University controls. The federation metadata for the same domain carries entityID
+      https://sts.windows.net/8c2b19ad-5f9c-49d4-9077-3ec3cfc52b3f/.
+    x-probe:
+      baseURL_status: 200
+      federation_metadata_status: 200
+      probed: '2026-09-01'
+  - aid: university-of-aberdeen:aura-dspace-rest
+    name: AURA DSpace REST API (tenancy on Edinburgh IS infrastructure)
+    description: >-
+      The Aberdeen University Research Archive (AURA) runs DSpace 8.1-SNAPSHOT and exposes a public
+      HATEOAS REST API advertising 79 endpoint families — communities, collections, items, bitstreams,
+      discovery/search, statistics, configuration, versioning, workflow and the COAR Notify
+      submission endpoints. Retrieved live 2026-09-01: the API root returns 200 in 0.37s with
+      dspaceName "Aura" and 182 communities. The content, the metadata and the administration are
+      Aberdeen's (adminEmail aura-manager@abdn.ac.uk), but the hosting is not: aura.abdn.ac.uk CNAMEs
+      to aura.abdn-lb.is.ed.ac.uk and resolves to 129.215.5.66, University of Edinburgh address space,
+      "abdn-lb" being an Aberdeen load balancer inside Edinburgh Information Services. The contract is
+      DSpace's, the deployment is Edinburgh's, the data is Aberdeen's. Recorded as a tenant
+      relationship; no DSpace specification is held under this slug. Note the Angular user interface at
+      aura.abdn.ac.uk/ and /home was returning 503 and 502 proxy errors on 2026-09-01 while the REST
+      and OAI backends answered in under half a second — the machine surface is healthier than the
+      human one.
+    humanURL: https://www.abdn.ac.uk/library/open-research/
     baseURL: https://aura.abdn.ac.uk/server/api
-    tags: [ Research, Open Access, Institutional Repository, DSpace, REST ]
+    tags: [ Research, Open Access, Institutional Repository, DSpace, REST, Tenant ]
     properties:
       - type: Documentation
         url: https://aura.abdn.ac.uk/server/api
+      - type: ResearchRepository
+        url: https://www.abdn.ac.uk/library/open-research/
+      - type: Conformance
+        url: conformance/university-of-aberdeen-conformance.yml
+    x-operator: tenant
+    x-operator-basis: >-
+      DNS: aura.abdn.ac.uk CNAME aura.abdn-lb.is.ed.ac.uk, A 129.215.5.66 (University of Edinburgh).
+      The hostname is on Aberdeen's own registrable domain, so a host-name verdict reads this as
+      institution-operated; the CNAME shows it is not. Software self-declaration: dspaceVersion
+      "DSpace 8.1-SNAPSHOT".
+    x-vendor: DSpace (LYRASIS), deployed by University of Edinburgh Information Services
+    x-probe:
+      baseURL_status: 200
+      ui_root_status: 503
+      ui_home_status: 502
+      availability: intermittent
+      note: >-
+        Repeated back-to-back probing on 2026-09-01 returned 200 in ~0.36s on four of six attempts and
+        degraded on the other two — one 503 after 31s and one connection timeout after 40s. The
+        endpoint is live and functional but not reliably so; graded live-with-intermittent-degradation,
+        not dead.
+      probed: '2026-09-01'
   - aid: university-of-aberdeen:aura-oai-pmh
-    name: AURA OAI-PMH Metadata Harvesting
+    name: AURA OAI-PMH Metadata Harvesting (tenancy on Edinburgh IS infrastructure)
     description: >-
-      AURA provides an OAI-PMH 2.0 endpoint (repository name "Aura") for harvesting
-      Dublin Core and other metadata formats describing the University of Aberdeen's
-      open-access research outputs. Standard verbs such as Identify, ListRecords,
-      ListSets, and GetRecord are supported.
-    humanURL: https://aura.abdn.ac.uk/
+      AURA's OAI-PMH 2.0 endpoint, repositoryName "Aura", repositoryIdentifier aura.abdn.ac.uk,
+      adminEmail aura-manager@abdn.ac.uk, earliest datestamp 2005-10-10. ListMetadataFormats offers
+      thirteen formats — oai_dc, qdc, mods, mets, didl, ore, xoai, dim, rdf, marc, etdms, rioxx and
+      uketd_dc — of which rioxx (UK research outputs) and uketd_dc (UK electronic theses) are
+      UK-specific compliance profiles. This is the University's research record, harvestable by
+      anyone, and it is the strongest reason the institution appears in aggregators at all. Same
+      operator caveat as the REST API: the endpoint lives on Edinburgh Information Services
+      infrastructure via CNAME.
+    humanURL: https://www.abdn.ac.uk/library/open-research/open-access/
     baseURL: https://aura.abdn.ac.uk/server/oai/request
-    tags: [ Research, Open Access, Institutional Repository, OAI-PMH, Metadata ]
+    tags: [ Research, Open Access, Institutional Repository, OAI-PMH, Metadata, Tenant ]
     properties:
       - type: Documentation
         url: https://aura.abdn.ac.uk/server/oai/request?verb=Identify
+      - type: Conformance
+        url: conformance/university-of-aberdeen-conformance.yml
+    x-operator: tenant
+    x-operator-basis: >-
+      DNS: aura.abdn.ac.uk CNAME aura.abdn-lb.is.ed.ac.uk, A 129.215.5.66 (University of Edinburgh).
+      OAI-PMH is a protocol implemented by DSpace, not by Aberdeen.
+    x-vendor: DSpace (LYRASIS), deployed by University of Edinburgh Information Services
+    x-probe:
+      baseURL_status: 200
+      identify_status: 200
+      listmetadataformats_status: 200
+      availability: intermittent
+      note: >-
+        Same intermittency as the REST API on the same host — mostly 200 in ~0.37s, occasionally a
+        30-40s hang. Live, degraded, not dead.
+      probed: '2026-09-01'
+  - aid: university-of-aberdeen:pure-cris-tenancy
+    name: Elsevier Pure CRIS tenancy (research portal, REST + OAI-PMH)
+    description: >-
+      The University's tenancy of Elsevier Pure, its current research information system, published as
+      "The University of Aberdeen Research Portal" at abdn.elsevierpure.com, which CNAMEs to
+      eu.prod.elsevierpure.com. The OAI-PMH 2.0 endpoint at /ws/oai is live — Identify returns
+      repositoryName "University of Aberdeen Research Repository" with adminEmail
+      pure-feedback@abdn.ac.uk, earliest datestamp 2010-03-31, and a schemaLocation declaring the
+      OpenAIRE CERIF 1.2 profile; ListSets returns the OpenAIRE CRIS set family plus persons:all,
+      publications:all and publications:withFiles. The June 2026 review of this repository recorded
+      this endpoint as HTTP 500 and excluded it; it is live as of 2026-09-01 and is recorded now. The
+      REST API at /ws/api serves a publicly readable 1,313,865-byte openapi.yaml — and that document is
+      the exact trap this pipeline exists to keep out. It declares info.title "Pure API",
+      info.contact.email pure-support@elsevier.com, info.version 5.36.2-1, security api-key, and a
+      relative servers[] entry of "/ws/api" naming no institution at all. Hostless, vendor-titled,
+      served from an Aberdeen-branded subdomain. It has NOT been saved under this slug; the tenancy has.
+    humanURL: https://abdn.elsevierpure.com/
+    baseURL: https://abdn.elsevierpure.com/ws/oai
+    tags: [ Research, CRIS, Pure, OAI-PMH, Repository, Metadata, Open Access, Tenant ]
+    properties:
+      - type: Documentation
+        url: https://abdn.elsevierpure.com/ws/api
+      - type: ResearchRepository
+        url: https://abdn.elsevierpure.com/
+      - type: Conformance
+        url: conformance/university-of-aberdeen-conformance.yml
+    x-operator: tenant
+    x-operator-basis: >-
+      DNS: abdn.elsevierpure.com CNAME eu.prod.elsevierpure.com. Spec self-declaration at
+      https://abdn.elsevierpure.com/ws/api/openapi.yaml — title "Pure API", contact
+      pure-support@elsevier.com, version 5.36.2-1, servers[0].url "/ws/api" (relative, hostless). The
+      /ws/api documentation page declares rel=canonical
+      https://api.elsevierpure.com/ws/api/documentation/index.html.
+    x-vendor: Elsevier (Pure)
+    x-contract-rejected: https://abdn.elsevierpure.com/ws/api/openapi.yaml
+    x-probe:
+      baseURL_status: 200
+      identify_status: 200
+      listsets_status: 200
+      openapi_yaml_status: 200
+      probed: '2026-09-01'
+  - aid: university-of-aberdeen:blackboard-learn-tenancy
+    name: MyAberdeen — Blackboard Learn tenancy
+    description: >-
+      MyAberdeen, the University's virtual learning environment, is a Blackboard Learn tenancy at
+      abdn.blackboard.com (www.abdn.ac.uk/myaberdeen redirects to it). The Blackboard Learn public REST
+      API is present and its unauthenticated version endpoint answers — /learn/api/public/v1/system/version
+      returns 200 with {"learn":{"major":4000,"minor":21,"patch":0,"build":"rel.28+435d029"}} — but
+      every data endpoint beyond it requires an OAuth2 application registered with Anthology, not with
+      Aberdeen. Blackboard is an LTI-certified platform; that certification is Anthology's, and no
+      Aberdeen-published LTI registration or tool configuration was found, so no LTI conformance is
+      claimed for the institution.
+    humanURL: https://www.abdn.ac.uk/myaberdeen
+    baseURL: https://abdn.blackboard.com/learn/api/public/v1
+    tags: [ Learning Management, VLE, Blackboard, Education Technology, Tenant ]
+    properties:
+      - type: Documentation
+        url: https://abdn.blackboard.com/learn/api/public/v1/system/version
+    x-operator: tenant
+    x-operator-basis: >-
+      Host abdn.blackboard.com is an institution-specific subdomain on Anthology's blackboard.com
+      platform. The version endpoint self-declares Blackboard Learn 4000.21.0; the contract, the
+      OAuth2 authorization server and the release train are Anthology's.
+    x-vendor: Anthology (Blackboard Learn)
+    x-probe:
+      baseURL_status: 400
+      version_endpoint_status: 200
+      note: >-
+        The collection root /learn/api/public/v1 returns 400 to a bare GET because it names no
+        resource; that is protocol behaviour, not an outage. The unauthenticated
+        /system/version endpoint under it returns 200.
+      probed: '2026-09-01'
+  - aid: university-of-aberdeen:primo-discovery-tenancy
+    name: Library discovery — Ex Libris Primo tenancy
+    description: >-
+      Library discovery runs on Ex Libris Primo VE at abdn.primo.exlibrisgroup.com with institution
+      view 44ABE_INST:44ABE_VU1. The Primo and Alma REST APIs are Ex Libris products gated behind
+      developer.exlibrisgroup.com keys issued to the institution, not published by it. Recorded as a
+      tenancy; no Ex Libris contract is held under this slug. A stale artefact of this move is visible
+      in the UK federation: Aberdeen still has an SP registered under entityID
+      https://primo.abdn.ac.uk/shib whose ACS endpoints all point at primo.abdn.ac.uk, a hostname that
+      no longer resolves. The federation record is live (MDQ returns 200, 6590 bytes); the service
+      behind it is not.
+    humanURL: https://www.abdn.ac.uk/library/
+    baseURL: https://abdn.primo.exlibrisgroup.com/discovery/search?vid=44ABE_INST:44ABE_VU1
+    tags: [ Library, Discovery, Primo, Ex Libris, Catalog, Tenant ]
+    properties:
+      - type: LibraryCatalog
+        url: https://abdn.primo.exlibrisgroup.com/discovery/search?vid=44ABE_INST:44ABE_VU1
+      - type: Documentation
+        url: https://www.abdn.ac.uk/library/
+    x-operator: tenant
+    x-operator-basis: >-
+      Host abdn.primo.exlibrisgroup.com is an institution-specific view (44ABE_INST) on Ex Libris's
+      shared Primo VE platform.
+    x-vendor: Ex Libris (Clarivate) — Primo VE
+    x-probe:
+      baseURL_status: 200
+      stale_sp_mdq_status: 200
+      stale_sp_host_status: 0
+      probed: '2026-09-01'
+  - aid: university-of-aberdeen:datacite-membership
+    name: DataCite membership and registered repository
+    description: >-
+      The University of Aberdeen is a DataCite member — provider symbol HUGZ, memberType
+      consortium_organization, organizationType academicInstitution, country GB, region EMEA — and
+      operates one registered DataCite repository, BL.ABDN, of repositoryType "institutional", created
+      2016-03-30 and pointed at https://aura.abdn.ac.uk/home. The BL. prefix places the membership
+      inside the British Library DataCite consortium. This is a fact about the institution recorded in
+      a shared registry, not a contract the institution publishes; api.datacite.org is DataCite's and
+      is never held under a university slug.
+    humanURL: https://www.abdn.ac.uk/library/open-research/open-data/
+    baseURL: https://api.datacite.org/providers/hugz
+    tags: [ Research Data, DOI, Persistent Identifiers, DataCite, Registry ]
+    properties:
+      - type: Documentation
+        url: https://api.datacite.org/repositories/bl.abdn
+      - type: Conformance
+        url: conformance/university-of-aberdeen-conformance.yml
+    x-operator: registry
+    x-operator-basis: >-
+      api.datacite.org is an identifier registry shared by every DataCite member. The membership record
+      (HUGZ) and the repository record (BL.ABDN) are Aberdeen's; the API is DataCite's.
+    x-registrant-id: HUGZ
+    x-repository-id: BL.ABDN
+    x-probe:
+      baseURL_status: 200
+      repository_record_status: 200
+      probed: '2026-09-01'
+  - aid: university-of-aberdeen:crossref-membership
+    name: Crossref membership and DOI prefixes
+    description: >-
+      The University of Aberdeen is Crossref member 12669, located "Aberdeen, United Kingdom", holding
+      DOI prefixes 10.57064 and 10.57132 with 795 DOIs deposited as of 2026-09-01. Recorded as a
+      registry membership: the member record describes the institution, the API belongs to Crossref.
+    humanURL: https://www.abdn.ac.uk/library/open-research/
+    baseURL: https://api.crossref.org/members/12669
+    tags: [ Research, DOI, Persistent Identifiers, Crossref, Registry, Scholarly Metadata ]
+    properties:
+      - type: Documentation
+        url: https://api.crossref.org/members/12669
+      - type: Conformance
+        url: conformance/university-of-aberdeen-conformance.yml
+    x-operator: registry
+    x-operator-basis: >-
+      api.crossref.org is an identifier registry shared by every Crossref member. Member id 12669 and
+      prefixes 10.57064 / 10.57132 are Aberdeen's; the API is Crossref's.
+    x-registrant-id: '12669'
+    x-doi-prefixes:
+      - '10.57064'
+      - '10.57132'
+    x-probe:
+      baseURL_status: 200
+      probed: '2026-09-01'
+  - aid: university-of-aberdeen:ror-registration
+    name: ROR organization registration
+    description: >-
+      The University of Aberdeen is registered in the Research Organization Registry as
+      https://ror.org/016476m91, cross-walked to GRID grid.7107.1, ISNI 0000 0004 1936 7291, Wikidata
+      Q270532 and Crossref Funder IDs 501100000882 and 501100007874. This is the canonical machine
+      identifier for the institution as an organization and it is what every research-metadata
+      aggregator resolves it by. Registry membership, not a published contract.
+    humanURL: https://ror.org/016476m91
+    baseURL: https://api.ror.org/organizations/https%3A%2F%2Fror.org%2F016476m91
+    tags: [ Research, Persistent Identifiers, ROR, Registry, Organization Identity ]
+    properties:
+      - type: Documentation
+        url: https://ror.org/016476m91
+    x-operator: registry
+    x-operator-basis: >-
+      api.ror.org is a shared organization registry. The record 016476m91 is Aberdeen's; the API is
+      ROR's.
+    x-registrant-id: https://ror.org/016476m91
+    x-probe:
+      baseURL_status: 200
+      human_record_status: 200
+      probed: '2026-09-01'
 common:
-  - type: VulnerabilityDisclosure
-    url: security/university-of-aberdeen-vulnerability-disclosure.yml
-  - type: DomainSecurity
-    url: security/university-of-aberdeen-domain-security.yml
   - type: Website
     url: https://www.abdn.ac.uk/
+  - type: Blog
+    url: https://www.abdn.ac.uk/news/
+  - type: Support
+    url: https://www.abdn.ac.uk/contact/
+  - type: PrivacyPolicy
+    url: https://www.abdn.ac.uk/privacy
+  - type: Accessibility
+    url: https://www.abdn.ac.uk/accessibility
   - type: GitHub
     url: https://github.com/uofa
   - type: LinkedIn
     url: https://www.linkedin.com/school/university-of-aberdeen/
+  - type: IdentityFederation
+    url: http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Fshibserv.abdn.ac.uk%2Fshibboleth
+  - type: ResearchRepository
+    url: https://www.abdn.ac.uk/library/open-research/
+  - type: LibraryCatalog
+    url: https://abdn.primo.exlibrisgroup.com/discovery/search?vid=44ABE_INST:44ABE_VU1
+  - type: CourseCatalog
+    url: https://www.abdn.ac.uk/study/courses/
+  - type: AIPolicy
+    url: https://www.abdn.ac.uk/staffnet/education/generative-ai-in-education/university-of-aberdeen-ai-principles/
+  - type: AITooling
+    url: https://www.abdn.ac.uk/staffnet/education/generative-ai-in-education/guidance-and-resources-on-genai/
+  - type: Conformance
+    url: conformance/university-of-aberdeen-conformance.yml
+  - type: VulnerabilityDisclosure
+    url: security/university-of-aberdeen-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/university-of-aberdeen-domain-security.yml
   - type: Plans
     url: plans/university-of-aberdeen-plans-pricing.yml
   - type: RateLimits
@@ -103,3 +454,205 @@ common:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-type: university
+x-category: Public Research University
+x-coverage:
+  state: covered
+  reason: tenant_only
+  detail: >-
+    Probed live on 2026-09-01 under pipeline-university. The University of Aberdeen operates ONE
+    institution-owned machine-readable surface class and it is not an API: its Shibboleth SAML 2.0
+    Identity Provider, entityID https://shibserv.abdn.ac.uk/shibboleth, scope abdn.ac.uk, published as
+    signed metadata through the Jisc UK Access Management Federation MDQ service (200, 14194 bytes) and
+    served directly from the University's own host shibserv2.abdn.ac.uk (200, 15707 bytes), alongside a
+    Microsoft Entra ID tenant (8c2b19ad-5f9c-49d4-9077-3ec3cfc52b3f) with live OIDC discovery and
+    WS-Federation metadata. Zero institution-operated API contracts were found and none were written.
+    Five surfaces are real but tenant-operated and are recorded as relationships without holding the
+    supplier's specification: AURA DSpace REST and OAI-PMH (aura.abdn.ac.uk CNAMEs to
+    aura.abdn-lb.is.ed.ac.uk, 129.215.5.66, University of Edinburgh Information Services — a
+    host-name verdict reads this as institution-operated and is wrong), Elsevier Pure REST and OAI-PMH
+    (abdn.elsevierpure.com CNAME eu.prod.elsevierpure.com), Blackboard Learn, and Ex Libris Primo VE.
+    Three registry memberships are recorded as facts about the institution: DataCite HUGZ / BL.ABDN,
+    Crossref 12669, ROR 016476m91. One vendor contract was found and deliberately rejected:
+    https://abdn.elsevierpure.com/ws/api/openapi.yaml, 1,313,865 bytes, info.title "Pure API",
+    info.contact.email pure-support@elsevier.com, servers[0].url "/ws/api" (relative and hostless) —
+    served from an Aberdeen-branded host and exactly the shape that got 36 Pure documents attributed to
+    Manchester. The profile is thin because the institution is thin, not because the probe was: no
+    api.abdn.ac.uk, developer.abdn.ac.uk, developers.abdn.ac.uk, data.abdn.ac.uk, opendata.abdn.ac.uk,
+    timetable.abdn.ac.uk or hpc.abdn.ac.uk resolves at all; www.abdn.ac.uk has no sitemap.xml and no
+    llms.txt; the course catalogue and registry pages are HTML only with no JSON behind them; and the
+    verified GitHub organization github.com/uofa holds 17 repositories of which 17 are forks and 0 are
+    original work. One genuine degradation was observed and is not a probe artefact: AURA's Angular
+    user interface returned 503 after 31 seconds and 502 after 60 seconds while its REST API and
+    OAI-PMH backend answered 200 in 0.37 seconds — the machine surface is healthier than the human one,
+    which is why the AURA humanURL now points at the library's open-research page rather than at
+    aura.abdn.ac.uk. A stale UK federation SP registration also survives: entityID
+    https://primo.abdn.ac.uk/shib is served by MDQ (200) but primo.abdn.ac.uk no longer resolves.
+  assessed: '2026-09-01'
+  method: pipeline-university + live probe
+  institution_surfaces: 2
+  tenant_surfaces: 5
+  registry_surfaces: 3
+  contracts_saved: 0
+  vendor_contracts_rejected: 1
+  cname_tenancies_recorded: 2
+  evidence:
+    - url: http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Fshibserv.abdn.ac.uk%2Fshibboleth
+      status: 200
+      note: Signed SAML EntityDescriptor, application/samlmetadata+xml, 14194 bytes.
+    - url: https://shibserv2.abdn.ac.uk/idp/shibboleth
+      status: 200
+      note: The IdP self-publishes its entity descriptor from an abdn.ac.uk host, 15707 bytes.
+    - url: https://shibserv2.abdn.ac.uk/idp/profile/SAML2/Redirect/SSO
+      status: 400
+      note: Requires a SAMLRequest; protocol behaviour, not an outage.
+    - url: https://login.microsoftonline.com/abdn.ac.uk/v2.0/.well-known/openid-configuration
+      status: 200
+      note: Resolves abdn.ac.uk to Entra tenant 8c2b19ad-5f9c-49d4-9077-3ec3cfc52b3f, region EU.
+    - url: https://login.microsoftonline.com/abdn.ac.uk/federationmetadata/2007-06/federationmetadata.xml
+      status: 200
+      note: WS-Federation / SAML metadata, entityID https://sts.windows.net/8c2b19ad-.../.
+    - url: https://aura.abdn.ac.uk/server/api
+      status: 200
+      note: DSpace 8.1-SNAPSHOT root, 8611 bytes, 79 endpoint families, 0.37s.
+    - url: https://aura.abdn.ac.uk/server/api/core/communities
+      status: 200
+      note: 182 communities.
+    - url: https://aura.abdn.ac.uk/server/api/discover/search/objects?query=oil
+      status: 200
+      note: Discovery search returns 254066 bytes of real results.
+    - url: https://aura.abdn.ac.uk/server/oai/request?verb=Identify
+      status: 200
+      note: repositoryName "Aura", earliest datestamp 2005-10-10.
+    - url: https://aura.abdn.ac.uk/server/oai/request?verb=ListMetadataFormats
+      status: 200
+      note: Thirteen formats including rioxx and uketd_dc.
+    - url: https://aura.abdn.ac.uk/
+      status: 503
+      note: >-
+        Angular UI times out after 31s. LIVE-but-degraded, not dead; the backend on the same host is
+        200 in 0.37s. Removed as a humanURL pointer.
+    - url: https://aura.abdn.ac.uk/server/api
+      status: 503
+      note: >-
+        Second reading of the same endpoint. Six back-to-back probes returned 200 in ~0.36s four
+        times, 503 after 31s once and a 40s timeout once. AURA is live with intermittent degradation
+        across both its UI and its backend; recorded as availability, not as a dead pointer.
+    - url: https://abdn.blackboard.com/learn/api/public/v1
+      status: 400
+      note: Collection root with no resource named; protocol behaviour, not an outage.
+    - url: https://aura.abdn.ac.uk/home
+      status: 502
+      note: Apache proxy error after 60s. This is the URL DataCite's BL.ABDN record points at.
+    - url: https://abdn.elsevierpure.com/ws/oai?verb=Identify
+      status: 200
+      note: >-
+        repositoryName "University of Aberdeen Research Repository", OpenAIRE CERIF 1.2. The June 2026
+        review recorded this as 500 and excluded it; it is live now.
+    - url: https://abdn.elsevierpure.com/ws/oai?verb=ListSets
+      status: 200
+      note: OpenAIRE CRIS sets plus persons:all, publications:all, publications:withFiles.
+    - url: https://abdn.elsevierpure.com/ws/api/openapi.yaml
+      status: 200
+      note: >-
+        REJECTED. 1313865 bytes, info.title "Pure API", contact pure-support@elsevier.com, version
+        5.36.2-1, servers[0].url "/ws/api" — hostless and vendor-titled. Not saved.
+    - url: https://abdn.elsevierpure.com/ws/api
+      status: 200
+      note: Documentation page declares rel=canonical https://api.elsevierpure.com/ws/api/documentation/index.html.
+    - url: https://abdn.blackboard.com/learn/api/public/v1/system/version
+      status: 200
+      note: Blackboard Learn 4000.21.0, unauthenticated version endpoint.
+    - url: https://abdn.primo.exlibrisgroup.com/discovery/search?vid=44ABE_INST:44ABE_VU1
+      status: 200
+      note: Primo VE institution view 44ABE_INST.
+    - url: http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Fprimo.abdn.ac.uk%2Fshib
+      status: 200
+      note: >-
+        Stale SP registration, 6590 bytes; ACS endpoints all on primo.abdn.ac.uk, which no longer
+        resolves. Federation record live, service behind it gone.
+    - url: https://api.datacite.org/providers/hugz
+      status: 200
+      note: Provider HUGZ, consortium_organization, GB.
+    - url: https://api.datacite.org/repositories/bl.abdn
+      status: 200
+      note: Repository BL.ABDN, institutional, created 2016-03-30.
+    - url: https://api.crossref.org/members/12669
+      status: 200
+      note: Prefixes 10.57064 and 10.57132, 795 DOIs.
+    - url: https://ror.org/016476m91
+      status: 200
+      note: ROR record; GRID grid.7107.1, ISNI 0000 0004 1936 7291.
+    - url: https://api.github.com/orgs/uofa/repos?per_page=100
+      status: 200
+      note: 17 repositories, all 17 forks, zero original repositories, no API specification.
+    - url: https://www.abdn.ac.uk/.well-known/security.txt
+      status: 200
+      note: Real security.txt; HackerOne embedded submission form, Expires 2027-05-01.
+    - url: https://www.abdn.ac.uk/robots.txt
+      status: 200
+      note: Disallows /testing/ and /search/ only.
+    - url: https://www.abdn.ac.uk/llms.txt
+      status: 404
+      note: Returns the site 404 page (43834 bytes), not a document.
+    - url: https://www.abdn.ac.uk/sitemap.xml
+      status: 404
+      note: No sitemap.
+    - url: https://www.abdn.ac.uk/study/courses/
+      status: 200
+      note: Course catalogue is HTML only; no JSON or feed behind it.
+    - url: https://www.abdn.ac.uk/staffnet/education/generative-ai-in-education/university-of-aberdeen-ai-principles/
+      status: 200
+      note: University of Aberdeen AI Principles — the institutional AI posture, a governance document.
+    - url: https://www.abdn.ac.uk/staffnet/education/generative-ai-in-education/guidance-and-resources-on-genai/
+      status: 200
+      note: GenAI guidance and resources for staff.
+    - url: https://www.linkedin.com/school/university-of-aberdeen/
+      status: 999
+      note: LinkedIn bot challenge; live and blocked, not dead.
+    - url: https://api.abdn.ac.uk/
+      status: 0
+      note: Does not resolve. No central API host.
+    - url: https://developer.abdn.ac.uk/
+      status: 0
+      note: Does not resolve. No developer portal.
+    - url: https://data.abdn.ac.uk/
+      status: 0
+      note: Does not resolve. No open data portal.
+    - url: https://opendata.abdn.ac.uk/
+      status: 0
+      note: Does not resolve.
+    - url: https://timetable.abdn.ac.uk/
+      status: 0
+      note: Does not resolve. No timetable API.
+    - url: https://hpc.abdn.ac.uk/
+      status: 0
+      note: Does not resolve. No public research-computing service catalog.
+  own_domains:
+    - abdn.ac.uk
+  tenant_hosts:
+    - aura.abdn.ac.uk
+    - abdn.elsevierpure.com
+    - abdn.blackboard.com
+    - abdn.primo.exlibrisgroup.com
+  audit_script_caveat: >-
+    audit-university-contracts.py classified both AURA surfaces as [institution] because its verdict is
+    host-name based and aura.abdn.ac.uk sits on Aberdeen's own registrable domain. It flagged the CNAME
+    to aura.abdn-lb.is.ed.ac.uk as "probably another domain of their own, probe before judging". It is
+    not: is.ed.ac.uk is University of Edinburgh Information Services and the A record is 129.215.5.66,
+    Edinburgh address space. The x-operator values in this file are set from DNS plus each
+    specification's own self-declaration, and they are the authority where the script disagrees.
+x-attribution-correction:
+  date: '2026-09-01'
+  summary: >-
+    No artifacts were deleted — this repository held no OpenAPI documents to misattribute, which is why
+    it survived the cohort-wide vendor purge untouched. The correction here is one of labelling. The
+    two AURA surfaces were carried as unqualified institution surfaces; DNS shows aura.abdn.ac.uk
+    CNAMEs into University of Edinburgh Information Services, so both are now x-operator tenant with
+    the CNAME recorded as the basis. Seven surfaces were added that the June 2026 profile missed
+    entirely: the Shibboleth SAML IdP in the UK Access Management Federation and the Entra ID tenant
+    (the institution's only genuinely own machine-readable surfaces), the Pure OAI-PMH endpoint that
+    was recorded as HTTP 500 in June and is live now, the Blackboard Learn and Primo VE tenancies, and
+    the DataCite, Crossref and ROR registry memberships. One vendor contract discovered during the run
+    — Elsevier's Pure openapi.yaml, publicly readable from Aberdeen's own tenant subdomain — was
+    rejected rather than saved.
