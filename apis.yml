@@ -60,7 +60,7 @@ accessModel:
     keyed surface is Elsevier's Pure REST API (security: api-key), and that onboarding is Elsevier's,
     not the institution's. The SAML IdP is free but is not self-serve: an application cannot obtain an
     assertion without being registered as a service provider in the UK federation.
-position: Consumer
+position: Consuming
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/university-of-aberdeen.png
 url: https://raw.githubusercontent.com/api-evangelist/university-of-aberdeen/refs/heads/main/apis.yml
