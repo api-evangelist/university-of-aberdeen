@@ -2,14 +2,20 @@
   "repo": "university-of-aberdeen",
   "feeds": [
     {
-      "source": "https://www.abdn.ac.uk/news/",
-      "feed_url": "https://www.abdn.ac.uk/news/latest-news/",
-      "title": "University of Aberdeen News",
+      "source": "https://www.abdn.ac.uk/",
+      "feed_url": "https://www.abdn.ac.uk/",
+      "title": "",
       "saved": 0,
-      "method": "none",
-      "error": "parse_failed"
+      "method": "none"
+    },
+    {
+      "source": "https://www.abdn.ac.uk/news/latest-news/",
+      "feed_url": "https://www.abdn.ac.uk/news/rss.xml",
+      "title": "",
+      "saved": 4,
+      "method": "discovered"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-08-30T22:05:13Z"
+  "post_count": 4,
+  "fetched": "2026-09-06T19:17:18Z"
 }
