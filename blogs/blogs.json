@@ -9,13 +9,13 @@
       "method": "none"
     },
     {
-      "source": "https://www.abdn.ac.uk/news/latest-news/",
+      "source": "https://www.abdn.ac.uk/news/rss.xml",
       "feed_url": "https://www.abdn.ac.uk/news/rss.xml",
       "title": "",
-      "saved": 4,
-      "method": "discovered"
+      "saved": 0,
+      "method": "feed"
     }
   ],
-  "post_count": 4,
-  "fetched": "2026-09-06T19:17:18Z"
+  "post_count": 15,
+  "fetched": "2026-09-13T13:00:00Z"
 }
