@@ -1,0 +1,198 @@
+---
+generated: '2026-09-01'
+method: probed
+source: >-
+  Live probes on 2026-09-01 against the Kin Score `education` regime's domain standards list. Every
+  claim below points at a specific fetched location with a status code. Reward-only: a standard that
+  was probed and not evidenced is recorded as not_found, never assumed. Each hit also carries an
+  x-operator, because for a university the question "does this standard appear" and the question
+  "did this institution implement it" have different answers.
+regime: education
+regime_id: education
+standards_probed:
+  - scim
+  - lti
+  - oneroster
+  - ed-fi
+  - caliper
+  - qti
+  - oai-pmh
+  - shibboleth
+  - saml
+  - orcid
+  - datacite
+  - crossref
+
+conformance:
+
+  - standard: shibboleth
+    status: conformant
+    x-operator: institution
+    confidence: high
+    summary: >-
+      The University operates its own Shibboleth Identity Provider, entityID
+      https://shibserv.abdn.ac.uk/shibboleth, registered in the Jisc UK Access Management Federation
+      and carried onward into eduGAIN.
+    evidence:
+      - location: http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Fshibserv.abdn.ac.uk%2Fshibboleth
+        status: 200
+        detail: >-
+          Signed SAML EntityDescriptor, 14194 bytes, content-type application/samlmetadata+xml,
+          entityID https://shibserv.abdn.ac.uk/shibboleth, OrganizationName "University of Aberdeen",
+          shibmd:Scope "abdn.ac.uk", technical contact mailto:webmaster@abdn.ac.uk. Roles present:
+          IDPSSODescriptor and AttributeAuthorityDescriptor. protocolSupportEnumeration includes
+          urn:mace:shibboleth:1.0, the native Shibboleth authn profile.
+      - location: https://shibserv2.abdn.ac.uk/idp/shibboleth
+        status: 200
+        detail: >-
+          The IdP publishes its own entity descriptor directly from an abdn.ac.uk host
+          (shibserv2.abdn.ac.uk, 5.101.151.154), 15707 bytes, content-type application/xml. This is
+          the institution serving its own machine-readable identity metadata, not a federation copy.
+
+  - standard: saml
+    status: conformant
+    x-operator: institution
+    confidence: high
+    summary: >-
+      SAML 2.0 and SAML 1.1 Identity Provider plus an Attribute Authority, discoverable through
+      federation metadata rather than through a developer portal. A second SAML surface exists as the
+      University's Microsoft Entra ID tenant.
+    evidence:
+      - location: http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Fshibserv.abdn.ac.uk%2Fshibboleth
+        status: 200
+        detail: >-
+          IDPSSODescriptor advertises urn:oasis:names:tc:SAML:2.0:protocol and
+          urn:oasis:names:tc:SAML:1.1:protocol. SingleSignOnService bindings on shibserv2.abdn.ac.uk:
+          SAML2/Redirect/SSO, SAML2/POST/SSO, SAML2/POST-SimpleSign/SSO and Shibboleth/SSO.
+      - location: https://login.microsoftonline.com/abdn.ac.uk/federationmetadata/2007-06/federationmetadata.xml
+        status: 200
+        detail: >-
+          28441 bytes of WS-Federation / SAML 2.0 metadata for the University's Entra ID tenant,
+          entityID https://sts.windows.net/8c2b19ad-5f9c-49d4-9077-3ec3cfc52b3f/. The tenant is the
+          institution's; the platform is Microsoft's.
+      - location: https://login.microsoftonline.com/abdn.ac.uk/v2.0/.well-known/openid-configuration
+        status: 200
+        detail: >-
+          OpenID Connect discovery document resolves the abdn.ac.uk domain to tenant
+          8c2b19ad-5f9c-49d4-9077-3ec3cfc52b3f, issuer
+          https://login.microsoftonline.com/8c2b19ad-5f9c-49d4-9077-3ec3cfc52b3f/v2.0,
+          tenant_region_scope EU. Recorded here as the OIDC face of the same identity estate; OIDC is
+          not itself in the education regime standards list.
+
+  - standard: oai-pmh
+    status: conformant
+    x-operator: tenant
+    confidence: high
+    summary: >-
+      Two live, independent OAI-PMH 2.0 repositories publish the University's research metadata: AURA
+      (DSpace 8.1) and the Pure research portal. Both are administered by Aberdeen staff and both carry
+      Aberdeen's records, but neither protocol implementation is Aberdeen's engineering — AURA's DSpace
+      is deployed on University of Edinburgh Information Services infrastructure and Pure's is
+      Elsevier's product. Credited as tenant conformance.
+    evidence:
+      - location: https://aura.abdn.ac.uk/server/oai/request?verb=Identify
+        status: 200
+        detail: >-
+          Valid OAI-PMH 2.0 Identify. repositoryName "Aura", protocolVersion 2.0, adminEmail
+          aura-manager@abdn.ac.uk, earliestDatestamp 2005-10-10T09:28:42Z, granularity
+          YYYY-MM-DDThh:mm:ssZ, repositoryIdentifier aura.abdn.ac.uk, sample identifier
+          oai:aura.abdn.ac.uk:2164/1234.
+      - location: https://aura.abdn.ac.uk/server/oai/request?verb=ListMetadataFormats
+        status: 200
+        detail: >-
+          Thirteen metadata formats offered — oai_dc, qdc, mods, mets, didl, ore, xoai, dim, rdf, marc,
+          etdms, rioxx and uketd_dc. rioxx is the RIOXX UK research-outputs profile and uketd_dc is the
+          UK electronic theses profile; both are UK-specific compliance formats.
+      - location: https://abdn.elsevierpure.com/ws/oai?verb=Identify
+        status: 200
+        detail: >-
+          Second OAI-PMH 2.0 repository. repositoryName "University of Aberdeen Research Repository",
+          adminEmail pure-feedback@abdn.ac.uk, earliestDatestamp 2010-03-31T12:43:55Z, schemaLocation
+          declares the OpenAIRE CERIF 1.2 profile. Note: the June 2026 review of this repo recorded this
+          endpoint as HTTP 500 and excluded it; it is live as of 2026-09-01.
+      - location: https://abdn.elsevierpure.com/ws/oai?verb=ListSets
+        status: 200
+        detail: >-
+          Sets include openaire_cris_publications, openaire_cris_patents, openaire_cris_persons,
+          openaire_cris_orgunits, openaire_cris_events, openaire_cris_equipments,
+          openaire_cris_products, persons:all, publications:all, publications:withFiles.
+
+  - standard: datacite
+    status: conformant
+    x-operator: registry
+    confidence: high
+    summary: >-
+      The University is a registered DataCite member and operates a registered DataCite repository for
+      AURA. This is a membership fact about the institution, not a contract it publishes.
+    evidence:
+      - location: https://api.datacite.org/providers/hugz
+        status: 200
+        detail: >-
+          Provider symbol HUGZ, name "University of Aberdeen", memberType consortium_organization,
+          organizationType academicInstitution, country GB, region EMEA, website
+          https://www.abdn.ac.uk/library/.
+      - location: https://api.datacite.org/repositories/bl.abdn
+        status: 200
+        detail: >-
+          Repository symbol BL.ABDN, name "University of Aberdeen", repositoryType ["institutional"],
+          clientType repository, url https://aura.abdn.ac.uk/home, created 2016-03-30. The BL. prefix
+          places the membership inside the British Library DataCite consortium.
+
+  - standard: crossref
+    status: conformant
+    x-operator: registry
+    confidence: high
+    summary: >-
+      The University is a Crossref member and holds its own DOI prefixes.
+    evidence:
+      - location: https://api.crossref.org/members/12669
+        status: 200
+        detail: >-
+          Member id 12669, primary-name "University of Aberdeen", location "Aberdeen, United Kingdom",
+          DOI prefixes 10.57064 and 10.57132, 795 DOIs deposited as of 2026-09-01.
+
+  - standard: orcid
+    status: not_found
+    confidence: medium
+    summary: >-
+      No Aberdeen-specific ORCID surface was evidenced. AURA and Pure both carry ORCID identifiers on
+      author records, but no institutional ORCID member record, consortium entry or ORCID-integration
+      endpoint was found that could be attributed to the University rather than to the platforms.
+      Not claimed.
+
+  - standard: lti
+    status: not_found
+    confidence: medium
+    summary: >-
+      The University runs MyAberdeen on Blackboard Learn (abdn.blackboard.com, Learn 4000.21.0), and
+      Blackboard is an LTI-certified platform — but that is Anthology's certification, not Aberdeen's.
+      No Aberdeen-published LTI tool registration, deep-linking configuration or platform
+      configuration document was found. Not claimed.
+
+  - standard: scim
+    status: not_found
+    confidence: medium
+    summary: >-
+      No public SCIM 2.0 provisioning endpoint. Entra ID tenants support SCIM provisioning, but nothing
+      Aberdeen-specific is publicly discoverable and an Entra capability is Microsoft's, not the
+      institution's.
+
+  - standard: oneroster
+    status: not_found
+    confidence: high
+    summary: OneRoster is a K-12 rostering standard; no surface found and none expected at this institution.
+
+  - standard: ed-fi
+    status: not_found
+    confidence: high
+    summary: Ed-Fi is a US K-12 data standard; no surface found and none expected at a UK university.
+
+  - standard: caliper
+    status: not_found
+    confidence: medium
+    summary: No public Caliper Analytics event store or sensor endpoint found.
+
+  - standard: qti
+    status: not_found
+    confidence: medium
+    summary: No public QTI assessment-interchange surface found.
