@@ -388,6 +388,7 @@ apis:
       baseURL_status: 200
       probed: '2026-09-01'
   - aid: university-of-aberdeen:ror-registration
+    x-published: false
     name: ROR organization registration
     description: >-
       The University of Aberdeen is registered in the Research Organization Registry as
